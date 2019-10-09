@@ -17,7 +17,7 @@ RUN \
     && yum -y install epel-release \
     && yum -y install git wget gcc gcc-c++ m4 autoconf libtool bison bison-devel zlib-devel libxml2-devel libjpeg-devel libjpeg-turbo-devel freetype-devel libpng-devel libcurl-devel libxslt-devel libmcrypt libmcrypt-devel mcrypt sqlite-devel libevent-devel mhash-devel pcre-devel bzip2-devel curl-devel openssl-devel bison-devel php-devel pcre-devel make re2c php-mysql \
     && mkdir -p /tmp \
-    && cd /tmp
+    && cd /tmp \
     && wget -O php.tar.gz $PHP_URL \
     && mkdir php \
     && tar -xf php.tar.gz -C php --strip-components=1 \
