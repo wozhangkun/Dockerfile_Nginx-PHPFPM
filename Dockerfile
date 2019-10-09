@@ -1,23 +1,5 @@
 FROM centos
 
-# Nginx Dockerfile
-# https://github.com/dockerfile/nginx
-
-# Define mountable directories.
-VOLUME ["/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
-
-# Install Nginx.
-COPY nginx.repo /etc/yum.repos.d/
-RUN yum -y install pcre-devel zlib-devel openssl-devel nginx 
-
-COPY nginx.conf /etc/nginx/
-COPY www.conf /etc/nginx/conf.d/
-
-# Expose ports.
-EXPOSE 80
-EXPOSE 443
-
-
 #PHP Dockerfile
 ENV PHP_v php-7.0.33
 ENV PHP_USER www-data
@@ -25,14 +7,17 @@ ENV PHP_DIR /usr/local/${PHP_v}
 
 ENV PHP_URL https://www.php.net/distributions/${PHP_v}.tar.gz
 ENV PECL_REDIS_URL http://pecl.php.net/get/redis-4.3.0.tgz
+COPY nginx.repo /etc/yum.repos.d/
 
 ###########################################################################################Install $PHP_v
 RUN \
-     useradd -s /sbin/nologin $PHP_USER \
+    useradd -s /sbin/nologin $PHP_USER \
+# Install Nginx.
+    && yum -y install pcre-devel zlib-devel openssl-devel nginx 
     && yum -y install epel-release \
-    && yum -y install git wget gcc gcc-c++ m4 autoconf libtool bison bison-devel zlib-devel libxml2-devel libjpeg-devel libjpeg-turbo-devel freetype-devel libpng-devel libcurl-devel libxslt-devel libmcrypt libmcrypt-devel mcrypt sqlite-devel libevent-devel mhash-devel pcre-devel bzip2-devel curl-devel openssl-devel bison-devel php-devel pcre-devel make \
-    #re2c php-mysql \
-    && cd /tmp \
+    && yum -y install git wget gcc gcc-c++ m4 autoconf libtool bison bison-devel zlib-devel libxml2-devel libjpeg-devel libjpeg-turbo-devel freetype-devel libpng-devel libcurl-devel libxslt-devel libmcrypt libmcrypt-devel mcrypt sqlite-devel libevent-devel mhash-devel pcre-devel bzip2-devel curl-devel openssl-devel bison-devel php-devel pcre-devel make re2c php-mysql \
+    && mkdir -p /tmp \
+    && cd /tmp
     && wget -O php.tar.gz $PHP_URL \
     && mkdir php \
     && tar -xf php.tar.gz -C php --strip-components=1 \
@@ -140,8 +125,16 @@ RUN \
       && rm -rf /tmp/php* \
       && yum clean all
 
-VOLUME ["/var/www/html"]
+# Nginx Dockerfile
+# https://github.com/dockerfile/nginx
+# Define mountable directories.
+VOLUME ["/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+COPY nginx.conf /etc/nginx/
+COPY www.conf /etc/nginx/conf.d/
 
+# Expose ports.
+EXPOSE 80
+EXPOSE 443
 EXPOSE 9000
 
 WORKDIR /var/www/html
