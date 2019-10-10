@@ -144,5 +144,5 @@ VOLUME ["/var/www/html"]
 EXPOSE 9000
 
 WORKDIR /var/www/html
-
+COPY nginx-phpfpm_cmd.sh /usr/local/bin/
 CMD ["nginx-phpfpm_cmd.sh"]
