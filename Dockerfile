@@ -139,4 +139,5 @@ EXPOSE 9000
 
 WORKDIR /var/www/html
 
-CMD /usr/local/php/sbin/php-fpm --nodaemonize --fpm-config /usr/local/php/etc/php-fpm.conf && nginx
+COPY nginx-phpfpm_cmd.sh /usr/local/bin/
+CMD ["nginx-phpfpm_cmd.sh"]
