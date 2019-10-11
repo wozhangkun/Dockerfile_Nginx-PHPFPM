@@ -141,4 +141,3 @@ WORKDIR /var/www/html
 
 COPY nginx-phpfpm_ENTRYPOINT.sh /usr/local/bin/
 ENTRYPOINT ["/bin/bash","/usr/local/bin/nginx-phpfpm_ENTRYPOINT.sh"]
-#CMD bash -c /usr/sbin/nginx -g "daemon on;" && /usr/local/php/sbin/php-fpm --nodaemonize --fpm-config /usr/local/php/etc/php-fpm.conf"
