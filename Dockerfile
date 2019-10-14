@@ -82,6 +82,7 @@ RUN \
             --enable-ftp \
             --disable-maintainer-zts \
             --enable-fileinfo \
+            --enable-sysvshm \
       && make \
       && make install \ 
       \
