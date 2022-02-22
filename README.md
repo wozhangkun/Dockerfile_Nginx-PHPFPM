@@ -8,7 +8,7 @@ docker service create -p 80:80 --mount type=bind,src=/var/www/html,dst=/var/www/
 
 ###################################wozhangkun/nginx-phpfpm:7.2.16
 
-1. 将www.conf复制到/etc/nginx/conf.d/
+1. 将default.conf复制到/etc/nginx/conf.d/
 
 2. 将代码复制都/var/www/html/
 
@@ -17,10 +17,10 @@ docker service create -p 80:80 --mount type=bind,src=/var/www/html,dst=/var/www/
 Dockerfile：
 
 FROM wozhangkun/nginx-phpfpm:7.2.16
+ADD --chown=www-data:www-data index.php /var/www/html/
+ADD default.conf /etc/nginx/conf.d/
+USER www-data:www-data
 
-ADD index.php /var/www/html/
-
-ADD www.conf /etc/nginx/conf.d/
 
 ###################
 
