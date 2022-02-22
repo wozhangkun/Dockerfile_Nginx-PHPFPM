@@ -29,6 +29,7 @@ RUN \
       && make \
       && make install \
       && echo -e "extension=event.so" >> /usr/local/php/etc/php.ini \
+      && cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
       \
       ######################################################################################move install file
       && cd \
@@ -46,6 +47,7 @@ EXPOSE 443
 EXPOSE 9000
 
 WORKDIR /var/www/html
+USER www-data:www-data
 
 COPY nginx-phpfpm_ENTRYPOINT.sh /usr/local/bin/
 ENTRYPOINT ["/bin/bash","/usr/local/bin/nginx-phpfpm_ENTRYPOINT.sh"]
