@@ -16,10 +16,10 @@ docker service create -p 80:80 --mount type=bind,src=/var/www/html,dst=/var/www/
 
 Dockerfile：
 
-FROM wozhangkun/nginx-phpfpm:7.2.16
-ADD --chown=www-data:www-data index.php /var/www/html/
-ADD default.conf /etc/nginx/conf.d/
-USER www-data:www-data
+FROM wozhangkun/nginx-phpfpm:7.2.16                                 
+ADD --chown=www-data:www-data index.php /var/www/html/                                
+ADD default.conf /etc/nginx/conf.d/                                
+USER www-data:www-data                                        
 
 
 ###################
